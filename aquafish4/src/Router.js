@@ -15,30 +15,26 @@ import MortalidadeView from "./pages/servicos/Mortalidades/mortalidadeView";
 export default function AppRouter(){
 
     return (
-      <BrowserRouter>
-        <Routes>
-       
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/registar-clientes/:id" element={<Clientes />} />
-                <Route path="/registarclientes" element={<Clientes />} />
-                <Route path="/clientesview" element={<ClientesView />} />
-                <Route path="/RegistarStock" element={<RegistarStock />} />
-                <Route path="/registar-stock/:id" element={<RegistarStock />} />
-                <Route path="/stockview" element={<StockView />} />
-                <Route path="/registarmercadoria" element={<RegistarMercadoria />} />
-                <Route path="/registar-mercadoria/:id" element={<RegistarMercadoria />} />
-                <Route path="/mercadoriaview" element={<MercadoriaView/>} />
-              
-                <Route path="/registarvenda" element={<RegistarVenda />} />
-                <Route path="/registar-venda/:id" element={<RegistarVenda />} />
-                <Route path="/vendasview" element={<VendasView/>} />
-              
-                <Route path="/registarmortalidade" element={<RegistarMortalidade />} />
-                <Route path="/registar-mortalidade/:id" element={<RegistarMortalidade />} />
-                <Route path="/mortalidadeview" element={<MortalidadeView/>} />
-              
-           
-        </Routes>
-      </BrowserRouter>
+      <BrowserRouter basename="/Menegment">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/registar-clientes/:id" element={<Clientes />} />
+            <Route path="/registarclientes" element={<Clientes />} />
+            <Route path="/clientesview" element={<ClientesView />} />
+            <Route path="/RegistarStock" element={<RegistarStock />} />
+            <Route path="/registar-stock/:id" element={<RegistarStock />} />
+            <Route path="/stockview" element={<StockView />} />
+            <Route path="/registarmercadoria" element={<RegistarMercadoria />} />
+            <Route path="/registar-mercadoria/:id" element={<RegistarMercadoria />} />
+            <Route path="/mercadoriaview" element={<MercadoriaView />} />
+            <Route path="/registarvenda" element={<RegistarVenda />} />
+            <Route path="/registar-venda/:id" element={<RegistarVenda />} />
+            <Route path="/vendasview" element={<VendasView />} />
+            <Route path="/registarmortalidade" element={<RegistarMortalidade />} />
+            <Route path="/registar-mortalidade/:id" element={<RegistarMortalidade />} />
+            <Route path="/mortalidadeview" element={<MortalidadeView />} />
+          </Routes>
+</BrowserRouter>
+
     )
 }
