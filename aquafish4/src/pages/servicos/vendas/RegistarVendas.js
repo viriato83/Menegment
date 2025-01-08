@@ -6,7 +6,6 @@ import Slider from "../../../components/Slider";
 import Footer from "../../../components/Footer";
 import { useParams } from "react-router-dom";
 import mensagem from "../../../components/mensagem";
-
 import repositorioStock from "../Stock.js/Repositorio";
  // Adicionar repositório de clientes
 
@@ -14,7 +13,7 @@ import { repositorioVenda } from "./vendasRepositorio";
 import vendas from "./Vendas";
 import repositorioMercadoria from "../Mercadorias/Repositorio";
 import ClienteRepository from "../Clientes/ClienteRepository";
-
+import mercadoria from "../Mercadorias/Mercadoria";
 export default function RegistarVenda() {
   const [inputs, setInputs] = useState({
     quantidade: "",
@@ -29,8 +28,11 @@ export default function RegistarVenda() {
   const { id } = useParams();
   let msg = new mensagem();
   let repositorio = new repositorioVenda();
-
+  const mercadoriaRepo = new repositorioMercadoria();
+  let Cadastro =true; //
+  let saidas=0;
   useEffect(() => {
+    // atualizacao 2025
     // Buscar clientes e mercadorias do backend
     const fetchClientes = async () => {
       const clienteRepo = new ClienteRepository();
@@ -39,16 +41,53 @@ export default function RegistarVenda() {
     };
 
     const fetchMercadorias = async () => {
-      const mercadoriaRepo = new repositorioMercadoria();
+    
       const data = await mercadoriaRepo.leitura(); // Assumindo que listar retorna as mercadorias
       setMercadorias(data);
     };
 
+  
     fetchClientes();
     fetchMercadorias();
   }, []);
 
+  //atualizacao 2025
+
+  const criaMercadoria = () => {
+    let Total = 0; // Inicializa o total
+  
+    mercadorias.map((merc) => {
+    
+      if (merc.idmercadoria == inputs.mercadoria) {
+            Total = merc.quantidade - Number(inputs.quantidade);
+        // Valida se a quantidade restante é válida
+        if (Total < 0) {
+          // window.alert("Quantidade insuficiente em estoque.");
+          // Total = 0; // Garante que não seja negativo
+            Cadastro=false
+      
+        }if(Total>0){
+          Cadastro=true
+        }
+      }
+    });
+  
+    // Retorna uma nova instância da mercadoria com o valor correto
+    return new mercadoria(
+      "", 
+      "",
+      Total, 
+      "",
+      0, // A
+      "",
+      0,
+      0
+    );
+  };
+  
+  
   const criaVenda = () => {
+ 
     return new vendas(
       inputs.quantidade,
       inputs.valorUnitario,
@@ -68,25 +107,46 @@ export default function RegistarVenda() {
     });
   };
 
-  const cadastrar = () => {
+  const cadastrar =  async() => {
     if (id) {
       repositorio.editar(id, criaVenda());
       msg.sucesso("Venda editada com sucesso.");
       limparFormulario(); // Limpa o formulário após editar
     } else {
-      if (
-        !inputs.quantidade ||
-        !inputs.valorUnitario ||
-        !inputs.data ||
-        !inputs.cliente ||
-        !inputs.mercadoria
-      ) {
-        msg.Erro("Preencha corretamente todos os campos obrigatórios");
-      } else {
-        repositorio.cadastrar(criaVenda());
-        msg.sucesso("Venda cadastrada com sucesso.");
-        limparFormulario(); // Limpa o formulário após cadastrar
-      }
+        if (
+          !inputs.quantidade ||
+          !inputs.valorUnitario ||
+          !inputs.data ||
+          !inputs.cliente ||
+          !inputs.mercadoria
+        ) {
+          msg.Erro("Preencha corretamente todos os campos obrigatórios");
+        } else {
+            if(Cadastro==true){
+                repositorio.cadastrar(criaVenda());
+                //Atualizacao 2025
+              
+                mercadoriaRepo.editar(inputs.mercadoria,criaMercadoria())
+
+                       // Atualize a quantidade de saídas
+                    mercadorias.forEach((merc) => {
+                      if (merc.idmercadoria == inputs.mercadoria) {
+                        saidas = merc.q_saidas + Number(inputs.quantidade); // Atualiza o valor da variável `saidas`
+                      }
+                    });
+
+
+                    console.log( saidas)
+                 
+                    await  mercadoriaRepo.editar2(inputs.mercadoria,inputs.data,saidas)
+              
+                msg.sucesso("Venda cadastrada com sucesso.");
+                console.log(Cadastro)
+                limparFormulario(); // Limpa o formulário após cadastrar
+              } if(Cadastro==false){
+                msg.Erro("Estoque insuficiente");
+              }
+          }
     }
   };
 
