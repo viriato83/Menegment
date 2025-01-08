@@ -68,10 +68,12 @@ export default function Dashboard() {
       let mercadorias = await mercadoria.leitura();
       mercadorias.forEach((e) => {
         if (e.tipo.toLowerCase() === "entrada") {
-          contador1++;
+          contador1+=e.quantidade
         }
+          contador2+=e.q_saidas
+   
         if (e.tipo.toLowerCase() === "saida") {
-          contador2++;
+          contador2+=e.quantidade
         }
       });
 
