@@ -104,9 +104,9 @@ export default class  repositorioMercadoria{
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({ id: Id ,...cliente}) 
-           
+             
           });
-          console.log(JSON.stringify({ id: Id ,...cliente}))
+          // console.log(JSON.stringify({ id: Id ,...cliente}))
     
           if (res.status==200) {
             console.log("Editado com sucesso"); 
@@ -122,7 +122,7 @@ export default class  repositorioMercadoria{
           return false;
         }
       }
-      async editar2(Id, mercadoria) {
+      async editar2(Id, mercadoria,quantidade) {
         try {
           let res = await fetch(this.endpoint, {  // Adicione 'await' e corrija o endpoint
             method: "PUT", 
@@ -130,7 +130,7 @@ export default class  repositorioMercadoria{
               "Authorization": "Bearer " + this.token,
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ id: Id ,tipo:"saida",data_saida: mercadoria}) 
+            body: JSON.stringify({ id: Id ,data_saida: mercadoria,Q_saidas: quantidade}) 
            
           });
     
