@@ -7,7 +7,7 @@ export default function Header(){
     return (<>
       <header>
         <div className="usuario">
-         
+           <p>{seccionStorage.getItem("login")}</p>
         </div>
         <div className="logo">
              <img src="logo_white-removebg2.png" alt="" width="130px"/>
