@@ -61,13 +61,13 @@ export default function MercadoriaView() {
               <tbody>
                 {modelo.map((elemento, i) => (
                   <tr key={i}>
-                    <td>{elemento.idmercadoria}</td>
-                    <td>{elemento.nome}</td>
-                    <td>{elemento.tipo}</td>
-                    <td>{elemento.quantidade}</td>
-                    <td>{elemento.data_entrada}</td>
-                    <td>{elemento.valor_un} Mt</td>
-                    <td>
+                    // <td>{elemento.idmercadoria}</td>
+                    // <td>{elemento.nome}</td>
+                    // <td>{elemento.tipo}</td>
+                    // <td>{elemento.quantidade}</td>
+                    // <td>{elemento.data_entrada}</td>
+                    // <td>{elemento.valor_un} Mt</td>
+                    // <td>
                       {elemento.valor_total.toLocaleString("pt-PT", {
                         minimumFractionDigits: 3,
                       })}{" "}
