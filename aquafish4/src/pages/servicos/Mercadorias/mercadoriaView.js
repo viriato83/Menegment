@@ -54,6 +54,7 @@ export default function MercadoriaView() {
                   <th>Data de Entrada</th>
                   <th>Valor unitário</th>
                   <th>Valor total</th>
+                  <th>Q Saidas</th>
                   <th>Data de Saída</th>
                 </tr>
               </thead>
@@ -72,6 +73,7 @@ export default function MercadoriaView() {
                       })}{" "}
                       Mt
                     </td>
+                    <td>{elemento.q_saidas}</td>
                     <td>{elemento.data_saida}</td>
                   </tr>
                 ))}
@@ -136,3 +138,4 @@ export default function MercadoriaView() {
     </>
   );
 }
+
